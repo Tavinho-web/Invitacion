@@ -6,7 +6,7 @@
 // IMPORTANTE: escribe tu número con código de país,
 // sin +, espacios ni guiones.
 // Ejemplo Colombia: 573001234567
-const numeroWhatsApp = "57XXXXXXXXXX";
+const numeroWhatsApp = "573025425793";
 
 
 // ==========================================
