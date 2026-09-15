@@ -1,406 +1,257 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+// ==========================================
+// INVITACIÓN DE OCTAVIO PARA TALIANA ❤️
+// ==========================================
 
-    <title>Una invitación para Taliana ❤️</title>
+// Tu número de WhatsApp
+// IMPORTANTE: escribe tu número con código de país,
+// sin +, espacios ni guiones.
+// Ejemplo Colombia: 573001234567
+const numeroWhatsApp = "573025425793";
 
-    <link rel="stylesheet" href="style.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-</head>
+// ==========================================
+// ELEMENTOS DE LA PÁGINA
+// ==========================================
 
-<body>
+const abrirInvitacion = document.getElementById("abrirInvitacion");
+const inicio = document.getElementById("inicio");
+const invitacion = document.getElementById("invitacion");
+const confirmar = document.getElementById("confirmar");
+const final = document.getElementById("final");
+const contenedorCorazones = document.querySelector(".hearts");
 
-    <!-- Corazones de fondo -->
-    <div class="hearts"></div>
 
-    <!-- PANTALLA INICIAL -->
-    <section id="inicio" class="pantalla">
+// ==========================================
+// ABRIR LA INVITACIÓN
+// ==========================================
 
-        <div class="contenido-inicio">
+abrirInvitacion.addEventListener("click", () => {
 
-            <div class="corazon-principal">♡</div>
+    // Ocultar pantalla inicial
+    inicio.classList.add("oculto");
 
-            <p class="pequeno">PARA ALGUIEN MUY ESPECIAL</p>
+    // Mostrar invitación
+    invitacion.classList.remove("oculto");
 
-            <h1>Taliana</h1>
+    // Llevar al comienzo de la invitación
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
-            <p class="frase-inicial">
-                Tengo algo preparado especialmente para ti...
+    // Crear corazones
+    crearCorazones(15);
+
+    // Activar animaciones de las secciones
+    activarAnimaciones();
+});
+
+
+// ==========================================
+// CORAZONES FLOTANTES
+// ==========================================
+
+function crearCorazones(cantidad) {
+
+    for (let i = 0; i < cantidad; i++) {
+
+        const corazon = document.createElement("div");
+
+        corazon.classList.add("heart");
+
+        corazon.innerHTML = "♡";
+
+        // Posición horizontal aleatoria
+        corazon.style.left = Math.random() * 100 + "%";
+
+        // Tamaño aleatorio
+        const tamaño = Math.random() * 15 + 12;
+        corazon.style.fontSize = tamaño + "px";
+
+        // Duración aleatoria
+        const duracion = Math.random() * 5 + 5;
+        corazon.style.animationDuration = duracion + "s";
+
+        // Retraso aleatorio
+        const retraso = Math.random() * 5;
+        corazon.style.animationDelay = retraso + "s";
+
+        contenedorCorazones.appendChild(corazon);
+
+        // Eliminar después de un tiempo
+        setTimeout(() => {
+            corazon.remove();
+        }, 12000);
+    }
+}
+
+
+// ==========================================
+// ANIMACIONES DE LAS SECCIONES
+// ==========================================
+
+function activarAnimaciones() {
+
+    const elementos = document.querySelectorAll(
+        ".seccion, .razon, .detalle, .foto-album, .tiempo, .mensaje-recuerdo"
+    );
+
+    const observer = new IntersectionObserver(
+        (entradas) => {
+
+            entradas.forEach((entrada) => {
+
+                if (entrada.isIntersecting) {
+
+                    entrada.target.classList.add("animar");
+
+                    observer.unobserve(entrada.target);
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+    elementos.forEach((elemento) => {
+        observer.observe(elemento);
+    });
+}
+
+
+// ==========================================
+// CONFIRMAR INVITACIÓN
+// ==========================================
+
+confirmar.addEventListener("click", () => {
+
+    // Mostrar mensaje final
+    final.classList.remove("oculto");
+
+    // Agregar animación
+    final.classList.add("animar");
+
+    // Llevar al mensaje final
+    setTimeout(() => {
+
+        final.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }, 100);
+
+
+    // ======================================
+    // MENSAJE DE WHATSAPP
+    // ======================================
+
+    const mensaje =
+        "Hola Octavio ❤️ Soy Taliana y quiero confirmar mi invitación para el domingo 20 de septiembre a las 7:00 PM. 🥰";
+
+    const mensajeCodificado = encodeURIComponent(mensaje);
+
+    const whatsappURL =
+        `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+
+
+    // Redirigir directamente para evitar bloqueos en celulares
+    if (numeroWhatsApp !== "57XXXXXXXXXX") {
+        window.location.href = whatsappURL;
+    } else {
+        alert(
+            "Antes de entregar la invitación, coloca tu número de WhatsApp en script.js ❤️"
+        );
+    }
+
+});
+
+
+// ==========================================
+// CORAZONES PERIÓDICOS
+// ==========================================
+
+setInterval(() => {
+
+    // Solo crear corazones si la invitación está visible
+    if (!invitacion.classList.contains("oculto")) {
+        crearCorazones(2);
+    }
+
+}, 4000);
+
+
+// ==========================================
+// CUENTA REGRESIVA ⏳❤️
+// ==========================================
+
+// Fecha de la cita:
+// Domingo 20 de septiembre de 2026
+// 7:00 PM
+
+const fechaCita = new Date("2026-09-20T19:00:00").getTime();
+
+function actualizarContador() {
+
+    const ahora = new Date().getTime();
+
+    const diferencia = fechaCita - ahora;
+
+
+    // Si ya llegó la fecha
+    if (diferencia <= 0) {
+
+        document.querySelector(".contador").innerHTML = `
+            <p class="cuenta-terminada">
+                ¡Llegó nuestro día! ❤️
             </p>
+        `;
 
-            <button id="abrirInvitacion" class="boton">
-                Abrir invitación
-                <span>♡</span>
-            </button>
+        return;
+    }
 
-        </div>
 
-    </section>
+    // Calcular tiempo restante
 
+    const dias = Math.floor(
+        diferencia / (1000 * 60 * 60 * 24)
+    );
 
-    <!-- INVITACIÓN -->
-    <main id="invitacion" class="oculto">
+    const horas = Math.floor(
+        (diferencia / (1000 * 60 * 60)) % 24
+    );
 
-        <!-- PORTADA -->
-        <section class="seccion portada">
+    const minutos = Math.floor(
+        (diferencia / (1000 * 60)) % 60
+    );
 
-            <div class="decoracion">♡</div>
+    const segundos = Math.floor(
+        (diferencia / 1000) % 60
+    );
 
-            <p class="etiqueta">UNA INVITACIÓN PARA TI</p>
 
-            <h2>
-                Taliana,<br>
-                quiero celebrar contigo
-            </h2>
+    // Mostrar números
 
-            <div class="linea"></div>
+    document.getElementById("dias").textContent =
+        String(dias).padStart(2, "0");
 
-            <p class="texto">
-                Hay días que merecen ser especiales,
-                pero hay personas que hacen que cualquier
-                día sea inolvidable.
-            </p>
+    document.getElementById("horas").textContent =
+        String(horas).padStart(2, "0");
 
-            <div class="flecha">↓</div>
+    document.getElementById("minutos").textContent =
+        String(minutos).padStart(2, "0");
 
-        </section>
+    document.getElementById("segundos").textContent =
+        String(segundos).padStart(2, "0");
+}
 
 
-        <!-- MOTIVO -->
-        <section class="seccion motivo">
+// Actualizar inmediatamente
+actualizarContador();
 
-            <p class="etiqueta">TENEMOS DOS RAZONES</p>
 
-            <h2>Para celebrar ❤️</h2>
-
-            <div class="razones">
-
-                <div class="razon">
-                    <div class="icono">🎂</div>
-                    <h3>Mi cumpleaños</h3>
-                    <p>
-                        Un año más de vida que quiero
-                        compartir contigo.
-                    </p>
-                </div>
-
-                <div class="separador">+</div>
-
-                <div class="razon">
-                    <div class="icono">❤️</div>
-                    <h3>Amor y Amistad</h3>
-                    <p>
-                        Una fecha perfecta para celebrar
-                        lo bonito que tenemos.
-                    </p>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==========================================
-             CUENTA REGRESIVA ❤️
-        ========================================== -->
-
-        <section class="seccion cuenta-regresiva">
-
-            <p class="etiqueta">FALTA POQUITO...</p>
-
-            <h2>Para nuestro próximo recuerdo ❤️</h2>
-
-            <p class="texto-cuenta">
-                El tiempo sigue pasando, pero cada segundo
-                nos acerca un poquito más al día.
-            </p>
-
-            <div class="contador">
-
-                <div class="tiempo">
-                    <strong id="dias">00</strong>
-                    <span>DÍAS</span>
-                </div>
-
-                <div class="separador-tiempo">:</div>
-
-                <div class="tiempo">
-                    <strong id="horas">00</strong>
-                    <span>HORAS</span>
-                </div>
-
-                <div class="separador-tiempo">:</div>
-
-                <div class="tiempo">
-                    <strong id="minutos">00</strong>
-                    <span>MINUTOS</span>
-                </div>
-
-                <div class="separador-tiempo">:</div>
-
-                <div class="tiempo">
-                    <strong id="segundos">00</strong>
-                    <span>SEGUNDOS</span>
-                </div>
-
-            </div>
-
-            <div class="corazon-contador">
-                ♡
-            </div>
-
-        </section>
-
-
-        <!-- FECHA -->
-        <section class="seccion fecha">
-
-            <p class="etiqueta">RESERVA ESTA FECHA</p>
-
-            <div class="fecha-card">
-
-                <span class="dia-semana">DOMINGO</span>
-
-                <strong>20</strong>
-
-                <span class="mes">SEPTIEMBRE</span>
-
-                <span class="anio">2026</span>
-
-            </div>
-
-            <div class="hora">
-                <span>♡</span>
-                7:00 PM
-                <span>♡</span>
-            </div>
-
-        </section>
-
-
-        <!-- DETALLES -->
-        <section class="seccion detalles">
-
-            <p class="etiqueta">LOS DETALLES</p>
-
-            <h2>La cita está preparada</h2>
-
-            <div class="detalle-lista">
-
-                <div class="detalle">
-                    <span>📅</span>
-                    <div>
-                        <small>FECHA</small>
-                        <strong>Domingo 20 de septiembre</strong>
-                    </div>
-                </div>
-
-                <div class="detalle">
-                    <span>🕖</span>
-                    <div>
-                        <small>HORA</small>
-                        <strong>7:00 de la noche</strong>
-                    </div>
-                </div>
-
-                <div class="detalle">
-                    <span>📍</span>
-                    <div>
-                        <small>LUGAR</small>
-                        <strong>Lugar sorpresa 🤫</strong>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==========================================
-             NUESTROS RECUERDOS ❤️
-        ========================================== -->
-
-        <section class="seccion galeria">
-
-            <p class="etiqueta">UN RECUERDO QUE QUIERO GUARDAR</p>
-
-            <h2>Nuestro primer cumpleaños juntos ❤️</h2>
-
-            <p class="texto-galeria">
-                Hay momentos que duran unas horas...
-                pero que se quedan para siempre en el corazón.
-            </p>
-
-            <div class="album">
-
-                <!-- FOTO 1 -->
-                <div class="foto-album foto-1">
-                    <div class="foto-marco">
-                        <img src="img/foto1.jpg" alt="Nuestro primer recuerdo juntos">
-                    </div>
-
-                    <div class="descripcion-foto">
-                        <span>♡</span>
-                        <p>El comienzo de un recuerdo especial.</p>
-                    </div>
-                </div>
-
-                <!-- FOTO 2 -->
-                <div class="foto-album foto-2">
-                    <div class="foto-marco">
-                        <img src="img/foto2.jpg" alt="Un momento juntos">
-                    </div>
-
-                    <div class="descripcion-foto">
-                        <span>♡</span>
-                        <p>Un momento que todavía me hace sonreír.</p>
-                    </div>
-                </div>
-
-                <!-- FOTO 3 -->
-                <div class="foto-album foto-3">
-                    <div class="foto-marco">
-                        <img src="img/foto3.jpg" alt="Nuestro recuerdo">
-                    </div>
-
-                    <div class="descripcion-foto">
-                        <span>♡</span>
-                        <p>Porque contigo lo sencillo se vuelve especial.</p>
-                    </div>
-                </div>
-
-                <!-- FOTO 4 -->
-                <div class="foto-album foto-4">
-                    <div class="foto-marco">
-                        <img src="img/foto4.jpg" alt="Nuestro primer cumpleaños juntos">
-                    </div>
-
-                    <div class="descripcion-foto">
-                        <span>♡</span>
-                        <p>Nuestro primer cumpleaños juntos. ❤️</p>
-                    </div>
-                </div>
-
-                <!-- FOTO 5 -->
-                <div class="foto-album foto-5">
-                    <div class="foto-marco">
-                        <img src="img/foto5.jpg" alt="Un recuerdo para siempre">
-                    </div>
-
-                    <div class="descripcion-foto">
-                        <span>♡</span>
-                        <p>Y espero que sea el primero de muchos.</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- MENSAJE ESPECIAL -->
-
-            <div class="mensaje-recuerdo">
-
-                <div class="corazon-recuerdo">♡</div>
-
-                <p>
-                    Nuestro primer cumpleaños y Amor y Amistad juntos.
-                </p>
-
-                <strong>
-                    Un recuerdo que significa mucho para mí...
-                </strong>
-
-                <span>
-                    y que quiero seguir construyendo contigo.
-                </span>
-
-            </div>
-
-            <!-- TRANSICIÓN -->
-
-            <div class="transicion-cita">
-
-                <div class="tres-corazones">
-                    ♡ &nbsp; ♡ &nbsp; ♡
-                </div>
-
-                <p>
-                    Después de todos estos recuerdos...
-                </p>
-
-                <h3>
-                    quiero crear uno más contigo.
-                </h3>
-
-                <div class="flecha-recuerdo">↓</div>
-
-            </div>
-
-        </section>
-
-
-        <!-- CONFIRMACIÓN -->
-        <section class="seccion confirmacion">
-
-            <div class="corazon-final">♡</div>
-
-            <p class="etiqueta">Y AHORA...</p>
-
-            <h2>
-                ¿Aceptas<br>
-                mi invitación?
-            </h2>
-
-            <p class="texto-confirmacion">
-                Solo falta saber una cosa...
-            </p>
-
-            <button id="confirmar" class="boton boton-confirmar">
-                Confirmar invitación
-                <span>❤️</span>
-            </button>
-
-            <p class="nota">
-                Al confirmar se abrirá WhatsApp
-                con un mensaje para mí.
-            </p>
-
-        </section>
-
-
-        <!-- FINAL -->
-        <section id="final" class="seccion final oculto">
-
-            <div class="lluvia-corazones">❤️</div>
-
-            <h2>¡Sabía que dirías que sí! ❤️</h2>
-
-            <p>
-                Entonces tenemos una cita.
-            </p>
-
-            <strong>
-                Domingo 20 de septiembre
-            </strong>
-
-            <p class="firma-final">
-                Te espero, Taliana.
-            </p>
-
-            <div class="iniciales">
-                O <span>♡</span> T
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <script src="script.js"></script>
-
-</body>
-</html>
+// Actualizar cada segundo
+setInterval(actualizarContador, 1000);
