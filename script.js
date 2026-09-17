@@ -19,6 +19,11 @@ const invitacion = document.getElementById("invitacion");
 const confirmar = document.getElementById("confirmar");
 const final = document.getElementById("final");
 const contenedorCorazones = document.querySelector(".hearts");
+const botonesRestaurante = document.querySelectorAll(".elegir-restaurante");
+const restauranteElegido = document.getElementById("restauranteElegido");
+const nombreRestauranteElegido = document.getElementById("nombreRestauranteElegido");
+
+let restauranteSeleccionado = "";
 
 
 // ==========================================
@@ -126,13 +131,63 @@ function activarAnimaciones() {
 // CONFIRMAR INVITACIÓN
 // ==========================================
 
+// ==========================================
+// ELECCIÓN DEL RESTAURANTE ❤️
+// ==========================================
+
+botonesRestaurante.forEach((boton) => {
+
+    boton.addEventListener("click", () => {
+
+        restauranteSeleccionado = boton.dataset.restaurante;
+
+        document.querySelectorAll(".restaurante-card").forEach((card) => {
+            card.classList.remove("seleccionado");
+        });
+
+        boton.closest(".restaurante-card").classList.add("seleccionado");
+
+        nombreRestauranteElegido.textContent = restauranteSeleccionado;
+
+        restauranteElegido.classList.remove("oculto");
+
+        restauranteElegido.classList.add("animar");
+
+        setTimeout(() => {
+
+            restauranteElegido.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }, 150);
+
+    });
+
+});
+
+
 confirmar.addEventListener("click", () => {
+
+    if (restauranteSeleccionado === "") {
+
+        alert("Primero elige dónde quieres que tengamos nuestra cena ❤️");
+
+        return;
+    }
 
     // Mostrar mensaje final
     final.classList.remove("oculto");
 
     // Agregar animación
     final.classList.add("animar");
+
+    const nombreFinal = final.querySelector(".firma-final");
+
+    if (nombreFinal) {
+        nombreFinal.textContent =
+            `Te espero, Taliana. ❤️`;
+    }
 
     // Llevar al mensaje final
     setTimeout(() => {
@@ -150,7 +205,7 @@ confirmar.addEventListener("click", () => {
     // ======================================
 
     const mensaje =
-        "Hola Octavio ❤️ Soy Taliana y quiero confirmar mi invitación para el domingo 20 de septiembre a las 7:00 PM. 🥰";
+        `Hola Octavio ❤️ Soy Taliana y quiero confirmar mi invitación para el domingo 20 de septiembre a las 7:00 PM. 🥰\n\nElegí este restaurante para nuestra cita: ${restauranteSeleccionado} 🍽️❤️`;
 
     const mensajeCodificado = encodeURIComponent(mensaje);
 
