@@ -1579,10 +1579,10 @@ body::after {
 
 .restaurantes-grid {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1200px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
     align-items: stretch;
 }
 
@@ -1653,6 +1653,20 @@ body::after {
     font-size: 30px;
 }
 
+.precio-alternativo {
+    margin-top: 10px;
+    font-size: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 15px;
+}
+
+.precio-alternativo span {
+    font-size: 13px;
+    display: block;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
 .precio span {
     display: block;
     margin-top: 3px;
@@ -1705,6 +1719,23 @@ body::after {
     font-size: 17px !important;
     line-height: 1.55 !important;
     color: #d8cbd0 !important;
+}
+
+.condiciones-reserva {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.condiciones-reserva h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.condiciones-reserva p {
+    color: #cdbec5;
+    font-size: 11px;
+    line-height: 1.7;
 }
 
 .elegir-restaurante {
@@ -1790,6 +1821,7 @@ body::after {
     }
 
     .restaurantes-grid {
+        grid-template-columns: 1fr;
         width: 94%;
     }
 
